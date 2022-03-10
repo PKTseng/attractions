@@ -1,6 +1,11 @@
 module.exports = {
-  content: ["./public/**/*.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  mode: "jit",
+  purge: ["./public/**/*.html", "./src/**/*.{js,jsx,ts,tsx,vue}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primaryGreen: "#1abc9c",
+      },
+    },
   },
 }

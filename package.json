@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
-    "dev": "vue-cli-service serve --mode dev --open"
+    "dev": "cross-env TAILWIND_MODE=watch vue-cli-service serve --mode dev --open"
   },
   "dependencies": {
     "autoprefixer": "^9.8.8",
@@ -24,6 +24,7 @@
     "@vue/cli-plugin-router": "~4.5.13",
     "@vue/cli-plugin-vuex": "~4.5.13",
     "@vue/cli-service": "~4.5.13",
+    "cross-env": "^7.0.3",
     "vue-cli-plugin-tailwind": "~3.0.0",
     "vue-template-compiler": "^2.6.11"
   },
