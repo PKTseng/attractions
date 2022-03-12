@@ -8,4 +8,11 @@ export default {
       params,
     })
   },
+  Load(params) {
+    return request({
+      methods: "get",
+      url: "/v2/Tourism/ScenicSpot",
+      params,
+    })
+  },
 }
