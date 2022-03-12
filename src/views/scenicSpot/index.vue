@@ -1,22 +1,17 @@
 <template>
-  <div class="w-full min-h-screen p-10">
+  <div class="w-full min-h-screen p-10 bg-blue-500">
     <h1 class="text-center pb-10">新北旅遊網</h1>
-    <div class="grid grid-cols-4 gap-4">
-      <div class="w-full bg-white rounded-lg overflow-hidden" v-for="item in scenicSpot" :key="item.ScenicSpotID">
-        <div class="h-3/4 flex justify-center items-center">
-          <img v-if="item.Picture.PictureUrl1" class="w-full h-full" :src="item.Picture.PictureUrl1" :alt="item.Picture.PictureDescription1" />
-          <p v-else class="text-gray-400 font-bold text-3xl">尚未提供圖片</p>
+    <div class="grid grid-cols-3 gap-6">
+      <div class="relative w-full h-full rounded-lg overflow-hidden cursor-pointer group" v-for="(item, index) in scenicSpot" :key="item.ScenicSpotID" @click="goDetailPage(item)">
+        <img class="w-full h-full bg-gradient-to-b from-cyan-500 to-blue-500" :src="item.Picture.PictureUrl1" :alt="item.PictureDescription1" />
+        <div
+          class="absolute top-0 right-0 bottom-0 left-0 bg-fixed opacity-0 hover:opacity-100 transition duration-300 ease-in-out flex justify-center items-center"
+          style="background-color: rgba(251, 251, 251, 0.7)"
+        ></div>
+        <div class="absolute top-5 left-10 text-white font-bold flex items-center text-2xl">
+          <p class="bg-white w-12 h-12 flex justify-center text-black items-center rounded-lg mr-2">{{ index + 1 }}</p>
+          <p class="group-hover:text-black">{{ item.ScenicSpotName }}</p>
         </div>
-        <div class="h-1/4 p-4">
-          <p class="">景點名稱：{{ item.ScenicSpotName }}</p>
-          <p>門票：{{ item.TicketInfo }}</p>
-        </div>
-        <!-- <p>地址：{{ item.Address }}</p>
-      <p>開放時間：{{ item.Address }}</p>
-      <p>描述：{{ item.Description }}</p>
-      <p>詳細資訊：{{ item.Description }}</p>
-      <p>更新時間：{{ item.SrcUpdateTime }}</p>
-      <p>聯絡電話：{{ item.Phone }}</p> -->
       </div>
     </div>
 
@@ -25,7 +20,7 @@
 </template>
 
 <script>
-import Pagination from "../../components/Pagination.vue"
+import Pagination from "@/components/Pagination.vue"
 export default {
   components: { Pagination },
   data() {
@@ -34,17 +29,23 @@ export default {
       perPage: 1,
       limit: 10,
       listQuery: {
-        $top: 10,
+        $top: 3,
         $format: "JSON",
       },
       scenicSpot: [],
     }
   },
   methods: {
+    goDetailPage(item) {
+      this.$router.push({
+        name: "scenicSpotDetail",
+        params: { id: item.ScenicSpotID },
+      })
+    },
     getList() {
       this.$api.scenicSpot.Load(this.listQuery).then((res) => {
         console.log(JSON.parse(JSON.stringify(res)))
-        this.scenicSpot = res
+        this.scenicSpot = res.filter((item) => item.Picture.PictureUrl1)
       })
     },
   },

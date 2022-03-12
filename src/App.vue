@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="bg-primaryGreen py-10">
+  <div id="app" class="">
     <router-view />
   </div>
 </template>
